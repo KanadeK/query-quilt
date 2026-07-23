@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dist-release/
+coverage/
+playwright-report/
+test-results/
+artifacts/
+.vite/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+*.duckdb
+*.db

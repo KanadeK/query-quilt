@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a focused improvement to Query Quilt.
+title: '[Feature]: '
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What analysis task is difficult today?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the user-visible behavior and exported SQL impact.
+    validations:
+      required: true
+  - type: dropdown
+    id: data-boundary
+    attributes:
+      label: Does this require a network service?
+      options:
+        - No
+        - Yes, with a deterministic local fallback
+    validations:
+      required: true
