@@ -137,6 +137,9 @@ export class DuckDbEngine implements QueryExecutor {
   }
 
   async dispose(): Promise<void> {
+    if (this.initialization) {
+      await this.initialization.catch(() => undefined);
+    }
     if (this.connection) {
       await this.connection.close();
       this.connection = null;

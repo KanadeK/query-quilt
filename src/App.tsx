@@ -1,10 +1,10 @@
-import { APP_META } from './version';
+import { AppErrorBoundary } from './features/workbench/AppErrorBoundary';
+import { Workbench } from './features/workbench/Workbench';
 
 export function App() {
   return (
-    <main>
-      <h1>{APP_META.name}</h1>
-      <p>Local, reversible data workflows backed by DuckDB SQL.</p>
-    </main>
+    <AppErrorBoundary>
+      <Workbench />
+    </AppErrorBoundary>
   );
 }
