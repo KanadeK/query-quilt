@@ -14,3 +14,5 @@ All notable changes to Query Quilt are documented here.
 - Add 58 unit and integration checks plus eight Chromium end-to-end paths covering import, export, editing, history, persistence, accessibility, responsive layout, and offline use.
 - Preserve exact Arrow decimal scale during result normalization and cover the behavior against a real DuckDB `DECIMAL(21,1)` result.
 - Add a deterministic production-server harness with isolated service-worker coverage for stable Windows and CI browser runs.
+- Complete the English and Simplified Chinese guides, architecture and privacy threat model, release checklist, and measured benchmark.
+- Add reproducible production-browser scripts for a real DuckDB demo result, README screenshot, and all-sample performance baseline.

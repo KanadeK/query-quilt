@@ -21,7 +21,10 @@
     "test:integration": "vitest run tests/integration",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "npm run build && playwright test",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs",
+    "demo": "npm run build && node scripts/demo.mjs",
+    "screenshot": "npm run build && node scripts/capture_screenshot.mjs",
+    "benchmark": "npm run build && node scripts/benchmark.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "1.32.0",
