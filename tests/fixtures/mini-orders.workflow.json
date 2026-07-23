@@ -1,0 +1,40 @@
+{
+  "id": "mini-order-path",
+  "name": "Mini order path",
+  "sourceTable": "mini_orders",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "steps": [
+    {
+      "id": "keep-north",
+      "kind": "filter",
+      "label": "Keep North orders",
+      "enabled": true,
+      "column": "region",
+      "operator": "=",
+      "value": "North"
+    },
+    {
+      "id": "calculate-tax",
+      "kind": "derive",
+      "label": "Calculate tax",
+      "enabled": true,
+      "column": "tax",
+      "expression": "amount * 0.1"
+    },
+    {
+      "id": "choose-output",
+      "kind": "select",
+      "label": "Choose output",
+      "enabled": true,
+      "columns": ["order_id", "region", "amount", "tax"]
+    },
+    {
+      "id": "largest-first",
+      "kind": "sort",
+      "label": "Largest first",
+      "enabled": true,
+      "orders": [{ "column": "amount", "direction": "desc" }]
+    }
+  ]
+}

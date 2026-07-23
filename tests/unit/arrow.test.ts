@@ -45,4 +45,26 @@ describe('arrowTableToQueryResult', () => {
       }),
     ).toThrow(/not an object/i);
   });
+
+  it('preserves exact Arrow decimals using the schema scale', () => {
+    const decimal = new Uint32Array([230, 0, 0, 0]);
+    Object.defineProperty(decimal, Symbol.for('isArrowBigNum'), {
+      value: true,
+    });
+    decimal.toString = () => '230';
+
+    const result = arrowTableToQueryResult({
+      schema: {
+        fields: [
+          {
+            name: 'tax',
+            type: { scale: 1, toString: () => 'Decimal[21e+1]' },
+          },
+        ],
+      },
+      toArray: () => [{ tax: decimal }],
+    });
+
+    expect(result.rows).toEqual([{ tax: '23.0' }]);
+  });
 });

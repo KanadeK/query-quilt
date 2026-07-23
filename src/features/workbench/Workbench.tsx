@@ -244,7 +244,7 @@ export function Workbench() {
           </div>
         </div>
 
-        <div className="topbar-status" aria-label="Runtime status">
+        <div className="topbar-status" aria-label="Runtime status" data-testid="runtime-status">
           <span className={`status-dot ${engineState}`} aria-hidden="true" />
           <span>
             {engineState === 'ready'
@@ -296,6 +296,7 @@ export function Workbench() {
       </header>
 
       <main className="workbench">
+        <h1 className="sr-only">Query Quilt local data workflow workbench</h1>
         <section className="workflow-bar" aria-label="Workflow controls">
           <label className="field workflow-name">
             <span>Workflow name</span>
@@ -458,7 +459,9 @@ export function Workbench() {
                 <p className="eyebrow">02 / Transform</p>
                 <h2 id="steps-title">Reversible step chain</h2>
               </div>
-              <span className="count-chip">{workflow.steps.length} steps</span>
+              <span className="count-chip" data-testid="step-count">
+                {workflow.steps.length} steps
+              </span>
             </div>
 
             <div className="add-step-row">
@@ -599,18 +602,15 @@ export function Workbench() {
                 <span>
                   <FileSql aria-hidden="true" /> Equivalent SQL
                 </span>
-                <button
-                  type="button"
-                  className="icon-button quiet"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    void copySql();
-                  }}
-                  aria-label="Copy equivalent SQL"
-                >
-                  <Copy aria-hidden="true" />
-                </button>
               </summary>
+              <button
+                type="button"
+                className="icon-button quiet copy-sql-button"
+                onClick={() => void copySql()}
+                aria-label="Copy equivalent SQL"
+              >
+                <Copy aria-hidden="true" />
+              </button>
               <pre>
                 <code>{compiled.sql}</code>
               </pre>
@@ -624,7 +624,7 @@ export function Workbench() {
               <p className="eyebrow">03 / Inspect and export</p>
               <h2 id="results-title">Query result</h2>
             </div>
-            <div className="result-metrics">
+            <div className="result-metrics" data-testid="result-metrics">
               <span>
                 <strong>{execution?.rows.length.toLocaleString() ?? '0'}</strong> rows
               </span>
@@ -632,7 +632,10 @@ export function Workbench() {
                 <strong>{execution?.columns.length ?? 0}</strong> columns
               </span>
               <span title={execution?.resultHash ?? undefined}>
-                hash <code>{execution?.resultHash.slice(0, 8) ?? 'pending'}</code>
+                hash{' '}
+                <code data-testid="result-hash" data-result-hash={execution?.resultHash ?? ''}>
+                  {execution?.resultHash.slice(0, 8) ?? 'pending'}
+                </code>
               </span>
             </div>
             <div className="view-switch" role="group" aria-label="Result view">
@@ -680,7 +683,7 @@ export function Workbench() {
           <div className={resultView === 'table' ? 'result-view active' : 'result-view'}>
             {execution ? (
               <>
-                <div className="table-scroll">
+                <div className="table-scroll" data-testid="result-table">
                   <table>
                     <thead>
                       <tr>
@@ -723,7 +726,11 @@ export function Workbench() {
         </section>
       </main>
 
-      <footer className={`statusbar ${notice.tone}`} aria-live="polite">
+      <footer
+        className={`statusbar ${notice.tone}`}
+        aria-live="polite"
+        data-testid="status-message"
+      >
         <span>
           {notice.tone === 'error' ? (
             <WarningCircle weight="fill" aria-hidden="true" />

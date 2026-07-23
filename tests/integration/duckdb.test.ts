@@ -76,4 +76,10 @@ describe('DuckDB-WASM sample integration', () => {
   it('surfaces invalid SQL as a real database failure', async () => {
     await expect(executor.query('SELECT * FROM missing_table;')).rejects.toThrow(/missing_table/i);
   });
+
+  it('preserves exact decimal scale from a real DuckDB result', async () => {
+    const result = await executor.query('SELECT CAST(23 AS DECIMAL(21, 1)) AS exact_amount;');
+
+    expect(result.rows).toEqual([{ exact_amount: '23.0' }]);
+  });
 });

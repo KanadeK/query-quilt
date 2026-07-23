@@ -17,13 +17,13 @@
   --surface-inset: #f2f3ed;
   --ink: #18211d;
   --muted: #657069;
-  --faint: #8a938d;
+  --faint: #5f6962;
   --rule: #cbd1c8;
   --rule-strong: #a9b2aa;
   --accent: #147457;
   --accent-strong: #0b5b43;
   --accent-soft: #dcece4;
-  --signal: #c25c27;
+  --signal: #a84b1d;
   --signal-soft: #f6e4d8;
   --danger: #ad3b32;
   --danger-soft: #f7e2df;
@@ -98,6 +98,19 @@ h2 {
   font-size: 0.96rem;
   font-weight: 720;
   letter-spacing: -0.01em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 code,
@@ -947,6 +960,7 @@ pre {
 }
 
 .sql-inspector {
+  position: relative;
   background: var(--surface-inset);
 }
 
@@ -959,6 +973,17 @@ pre {
   border-bottom: 1px solid var(--rule);
   cursor: pointer;
   list-style: none;
+}
+
+.sql-inspector > summary {
+  padding-right: 48px;
+}
+
+.copy-sql-button {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  right: 10px;
 }
 
 .sql-inspector > summary > span {
@@ -1429,7 +1454,7 @@ pre {
     --surface-inset: #171d19;
     --ink: #e2e8e3;
     --muted: #a5afa8;
-    --faint: #7f8a83;
+    --faint: #9ba59f;
     --rule: #354039;
     --rule-strong: #4a574f;
     --accent: #5fc29c;

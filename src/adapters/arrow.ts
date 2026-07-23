@@ -3,6 +3,7 @@ import type { QueryResult } from './query';
 interface ArrowFieldLike {
   name: string;
   type: {
+    scale?: number;
     toString(): string;
   };
 }
@@ -19,7 +20,36 @@ export interface ArrowTableLike {
   toArray(): readonly ArrowRowLike[];
 }
 
-function normalizeValue(value: unknown): unknown {
+const arrowBigNumSymbol = Symbol.for('isArrowBigNum');
+
+function decimalString(value: ArrayBufferView, scale: number): string {
+  const arrowValue = value as ArrayBufferView & {
+    [arrowBigNumSymbol]?: boolean;
+    toString(): string;
+  };
+  if (!arrowValue[arrowBigNumSymbol]) {
+    throw new TypeError('Arrow returned a decimal without its exact-number marker.');
+  }
+
+  const raw = arrowValue.toString();
+  const negative = raw.startsWith('-');
+  const digits = negative ? raw.slice(1) : raw;
+  if (!/^\d+$/.test(digits)) {
+    throw new TypeError('Arrow returned an invalid decimal value.');
+  }
+  const sign = negative ? '-' : '';
+  if (scale === 0) {
+    return `${sign}${digits}`;
+  }
+  if (scale < 0) {
+    return `${sign}${digits}${'0'.repeat(-scale)}`;
+  }
+  const padded = digits.padStart(scale + 1, '0');
+  const split = padded.length - scale;
+  return `${sign}${padded.slice(0, split)}.${padded.slice(split)}`;
+}
+
+function normalizeValue(value: unknown, arrowType?: ArrowFieldLike['type']): unknown {
   if (
     value === null ||
     value === undefined ||
@@ -34,6 +64,9 @@ function normalizeValue(value: unknown): unknown {
     return value;
   }
   if (ArrayBuffer.isView(value)) {
+    if (typeof arrowType?.scale === 'number') {
+      return decimalString(value, arrowType.scale);
+    }
     return Array.from(new Uint8Array(value.buffer, value.byteOffset, value.byteLength));
   }
   if (Array.isArray(value)) {
@@ -57,17 +90,22 @@ function normalizeValue(value: unknown): unknown {
 }
 
 export function arrowTableToQueryResult(table: ArrowTableLike): QueryResult {
+  const fieldsByName = new Map(table.schema.fields.map((field) => [field.name, field.type]));
   const columns = table.schema.fields.map((field) => ({
     name: field.name,
     type: field.type.toString(),
   }));
   const rows = table.toArray().map((row) => {
     const json = row.toJSON ? row.toJSON() : row;
-    const normalized = normalizeValue(json);
-    if (!normalized || typeof normalized !== 'object' || Array.isArray(normalized)) {
+    if (!json || typeof json !== 'object' || Array.isArray(json)) {
       throw new TypeError('DuckDB returned a result row that is not an object.');
     }
-    return normalized as Readonly<Record<string, unknown>>;
+    return Object.fromEntries(
+      Object.entries(json).map(([key, value]) => [
+        key,
+        normalizeValue(value, fieldsByName.get(key)),
+      ]),
+    );
   });
 
   return { columns, rows };

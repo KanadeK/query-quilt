@@ -11,3 +11,6 @@ All notable changes to Query Quilt are documented here.
 - Deliver the browser workbench with live DuckDB execution, editable step cards, row-count telemetry, SQL inspection, responsive data tables, charts, and four export formats.
 - Fix chart lifecycle isolation so switching workflows while a chart is open cannot remove React-owned interface nodes.
 - Precache the local DuckDB WASM runtime so the production application can execute samples after the network is disconnected.
+- Add 58 unit and integration checks plus eight Chromium end-to-end paths covering import, export, editing, history, persistence, accessibility, responsive layout, and offline use.
+- Preserve exact Arrow decimal scale during result normalization and cover the behavior against a real DuckDB `DECIMAL(21,1)` result.
+- Add a deterministic production-server harness with isolated service-worker coverage for stable Windows and CI browser runs.
