@@ -1,0 +1,44 @@
+{
+  "id": "product-performance",
+  "name": "Product performance",
+  "sourceTable": "sales",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "steps": [
+    {
+      "id": "calculate-net-revenue",
+      "kind": "derive",
+      "label": "Calculate net revenue",
+      "enabled": true,
+      "column": "net_revenue",
+      "expression": "units * unit_price * (1 - discount)"
+    },
+    {
+      "id": "summarize-products",
+      "kind": "group",
+      "label": "Summarize products",
+      "enabled": true,
+      "dimensions": ["product", "category"],
+      "measures": [
+        { "aggregation": "sum", "column": "units", "alias": "units_sold" },
+        {
+          "aggregation": "sum",
+          "column": "net_revenue",
+          "alias": "revenue"
+        },
+        {
+          "aggregation": "avg",
+          "column": "unit_price",
+          "alias": "average_price"
+        }
+      ]
+    },
+    {
+      "id": "rank-products",
+      "kind": "sort",
+      "label": "Rank products",
+      "enabled": true,
+      "orders": [{ "column": "revenue", "direction": "desc" }]
+    }
+  ]
+}

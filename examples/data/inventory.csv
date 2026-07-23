@@ -1,0 +1,11 @@
+sku,product,category,warehouse,stock,reorder_point,unit_cost,supplier
+Q-101,Canvas Tote,Accessories,Nanjing,14,18,16.50,Harbor Weave
+Q-102,Field Notebook,Stationery,Suzhou,42,30,7.20,Paper North
+Q-103,Desk Lamp,Home,Nanjing,8,12,41.00,Lumen Works
+Q-104,Modular Shelf,Home,Chengdu,5,10,82.00,Grid Foundry
+Q-105,Travel Mug,Accessories,Suzhou,26,20,13.40,Drift Steel
+Q-106,Mechanical Pencil,Stationery,Chengdu,65,40,4.10,Axis Write
+Q-107,Linen Throw,Home,Nanjing,9,14,35.50,Quiet Loom
+Q-108,Cable Kit,Electronics,Suzhou,18,18,21.00,Signal Yard
+Q-109,Portable Stand,Electronics,Chengdu,7,15,29.00,Angle Lab
+Q-110,Storage Tray,Home,Nanjing,31,24,18.75,Form Mill

@@ -1,0 +1,11 @@
+customer_id,customer_name,segment,region,signup_date
+C001,Mira Chen,Enterprise,North,2024-02-18
+C002,Imani Okafor,Education,South,2024-04-03
+C003,Rafael Costa,Studio,East,2024-05-21
+C004,Aiko Sato,Enterprise,West,2024-07-09
+C005,Nora Haddad,Studio,West,2024-09-14
+C006,Theo Martin,Education,North,2024-11-02
+C007,Linh Nguyen,Studio,East,2025-01-12
+C008,Elias Petrov,Education,West,2025-03-28
+C009,Amara Mensah,Enterprise,North,2025-06-17
+C010,Sofía Rojas,Studio,South,2025-08-05

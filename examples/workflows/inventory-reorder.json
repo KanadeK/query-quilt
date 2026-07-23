@@ -1,0 +1,40 @@
+{
+  "id": "inventory-reorder",
+  "name": "Inventory reorder queue",
+  "sourceTable": "inventory",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "steps": [
+    {
+      "id": "calculate-stock-gap",
+      "kind": "derive",
+      "label": "Calculate stock gap",
+      "enabled": true,
+      "column": "stock_gap",
+      "expression": "reorder_point - stock"
+    },
+    {
+      "id": "keep-shortages",
+      "kind": "filter",
+      "label": "Keep shortages",
+      "enabled": true,
+      "column": "stock_gap",
+      "operator": ">",
+      "value": 0
+    },
+    {
+      "id": "choose-reorder-columns",
+      "kind": "select",
+      "label": "Choose reorder columns",
+      "enabled": true,
+      "columns": ["sku", "product", "warehouse", "stock", "reorder_point", "stock_gap", "supplier"]
+    },
+    {
+      "id": "largest-gap-first",
+      "kind": "sort",
+      "label": "Largest gap first",
+      "enabled": true,
+      "orders": [{ "column": "stock_gap", "direction": "desc" }]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "high-value-orders",
+  "name": "High-value order review",
+  "sourceTable": "sales",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "steps": [
+    {
+      "id": "calculate-net-revenue",
+      "kind": "derive",
+      "label": "Calculate net revenue",
+      "enabled": true,
+      "column": "net_revenue",
+      "expression": "units * unit_price * (1 - discount)"
+    },
+    {
+      "id": "keep-high-value-orders",
+      "kind": "filter",
+      "label": "Keep high-value orders",
+      "enabled": true,
+      "column": "net_revenue",
+      "operator": ">=",
+      "value": 200
+    },
+    {
+      "id": "choose-review-columns",
+      "kind": "select",
+      "label": "Choose review columns",
+      "enabled": true,
+      "columns": ["order_id", "order_date", "customer_id", "product", "region", "net_revenue"]
+    },
+    {
+      "id": "largest-order-first",
+      "kind": "sort",
+      "label": "Largest order first",
+      "enabled": true,
+      "orders": [{ "column": "net_revenue", "direction": "desc" }]
+    }
+  ]
+}

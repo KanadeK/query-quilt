@@ -1,0 +1,66 @@
+{
+  "id": "customer-segment-value",
+  "name": "Customer segment value",
+  "sourceTable": "sales",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "steps": [
+    {
+      "id": "calculate-net-revenue",
+      "kind": "derive",
+      "label": "Calculate net revenue",
+      "enabled": true,
+      "column": "net_revenue",
+      "expression": "units * unit_price * (1 - discount)"
+    },
+    {
+      "id": "join-customer-segment",
+      "kind": "join",
+      "label": "Join customer segment",
+      "enabled": true,
+      "rightTable": "customers",
+      "joinType": "left",
+      "leftColumn": "customer_id",
+      "rightColumn": "customer_id",
+      "rightColumns": [
+        { "column": "customer_name", "alias": "customer_name" },
+        { "column": "segment", "alias": "segment" }
+      ]
+    },
+    {
+      "id": "summarize-segments",
+      "kind": "group",
+      "label": "Summarize segments",
+      "enabled": true,
+      "dimensions": ["segment"],
+      "measures": [
+        {
+          "aggregation": "sum",
+          "column": "net_revenue",
+          "alias": "revenue"
+        },
+        {
+          "aggregation": "avg",
+          "column": "net_revenue",
+          "alias": "average_order"
+        },
+        {
+          "aggregation": "count_distinct",
+          "column": "customer_id",
+          "alias": "customer_count"
+        },
+        {
+          "aggregation": "count",
+          "alias": "order_count"
+        }
+      ]
+    },
+    {
+      "id": "rank-segments",
+      "kind": "sort",
+      "label": "Rank segments",
+      "enabled": true,
+      "orders": [{ "column": "revenue", "direction": "desc" }]
+    }
+  ]
+}

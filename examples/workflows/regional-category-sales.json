@@ -1,0 +1,51 @@
+{
+  "id": "regional-category-sales",
+  "name": "Northern revenue by category",
+  "sourceTable": "sales",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "steps": [
+    {
+      "id": "calculate-net-revenue",
+      "kind": "derive",
+      "label": "Calculate net revenue",
+      "enabled": true,
+      "column": "net_revenue",
+      "expression": "units * unit_price * (1 - discount)"
+    },
+    {
+      "id": "keep-northern-orders",
+      "kind": "filter",
+      "label": "Keep northern orders",
+      "enabled": true,
+      "column": "region",
+      "operator": "=",
+      "value": "North"
+    },
+    {
+      "id": "summarize-categories",
+      "kind": "group",
+      "label": "Summarize categories",
+      "enabled": true,
+      "dimensions": ["category"],
+      "measures": [
+        {
+          "aggregation": "sum",
+          "column": "net_revenue",
+          "alias": "revenue"
+        },
+        {
+          "aggregation": "count",
+          "alias": "order_count"
+        }
+      ]
+    },
+    {
+      "id": "rank-category-revenue",
+      "kind": "sort",
+      "label": "Rank category revenue",
+      "enabled": true,
+      "orders": [{ "column": "revenue", "direction": "desc" }]
+    }
+  ]
+}
