@@ -20,3 +20,4 @@ All notable changes to Query Quilt are documented here.
 - Build deterministic static/workflow archives with SHA-256 sums, safe-entry validation, clean extraction, and a real packaged-browser smoke test.
 - Add repository secret/unfinished-marker scans and a one-command release gate that verifies versions, coverage, artifacts, authors, and a clean tree.
 - Override Workbox's legacy Jake file-list dependency with its Node 22-compatible patched major, removing the high-severity brace-expansion advisory chain.
+- Use the current official Node 24 GitHub Action majors for checkout, setup, artifacts, Pages configuration, and deployment.
