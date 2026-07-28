@@ -34,7 +34,7 @@
     "screenshot": "npm run build && node scripts/capture_screenshot.mjs",
     "benchmark": "npm run build && node scripts/benchmark.mjs",
     "security:scan": "node scripts/scan_secrets.mjs && node scripts/scan_unfinished.mjs",
-    "package": "npm run build && node scripts/package_release.mjs",
+    "package": "node scripts/check_archive_determinism.mjs && npm run build && node scripts/package_release.mjs",
     "pages:smoke": "node scripts/smoke_pages.mjs",
     "release-check": "node scripts/release_check.mjs"
   },

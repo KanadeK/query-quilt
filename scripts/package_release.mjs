@@ -11,9 +11,17 @@ import { startStaticServer, stopDistributionServer } from './serve_dist.mjs';
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const distributionRoot = path.join(repositoryRoot, 'dist');
 const releaseRoot = path.join(repositoryRoot, 'dist-release');
-const fixedArchiveTime = new Date('2026-01-01T00:00:00.000Z');
+// ZIP stores a timezone-free DOS timestamp, so local midnight produces the same
+// archive header in UTC and non-UTC build environments.
+const fixedArchiveTime = new Date(2026, 0, 1, 0, 0, 0, 0);
+const fixedArchivePlatform = 0x0314;
 const expectedDemoHash = '221e8503e1a7f022362748ef6d666992c5aa3d9b52e82beb25f83cf7d7460bc2';
 const versionPattern = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
+
+export function applyFixedArchiveMetadata(entry) {
+  entry.header.time = fixedArchiveTime;
+  entry.header.made = fixedArchivePlatform;
+}
 
 function assertReleaseRoot() {
   if (
@@ -79,7 +87,7 @@ async function addFile(zip, sourcePath, entryName) {
   if (!entry) {
     throw new Error(`Unable to add ${entryName} to the archive.`);
   }
-  entry.header.time = fixedArchiveTime;
+  applyFixedArchiveMetadata(entry);
 }
 
 async function writeStaticArchive(outputPath) {
