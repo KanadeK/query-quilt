@@ -70,7 +70,7 @@ DuckDB runtime; warm workflow changes on these fixtures are well below one secon
 - The test machine had substantial memory pressure at measurement time, which may affect
   cold start.
 - The current production build precaches roughly 39.4 MiB, primarily DuckDB WASM.
-- v0.1.0 keeps imported tables in memory; practical limits depend on browser and device,
+- v0.1.1 keeps imported tables in memory; practical limits depend on browser and device,
   even though the input guard is 512 MiB.
 
 Future releases should retain this fixture baseline and add generated 10k/100k/1m-row

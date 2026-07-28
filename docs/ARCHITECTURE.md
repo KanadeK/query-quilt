@@ -42,7 +42,7 @@ flowchart LR
 ```
 
 DuckDB's packaged browser worker performs database work off the main thread. Query Quilt
-does not need an additional project-owned worker entry point in v0.1.0.
+does not need an additional project-owned worker entry point in v0.1.1.
 
 ## Directory responsibilities
 
@@ -70,7 +70,7 @@ A workflow is version-independent JSON with:
 
 `WorkflowSchema` is the only entry point for untrusted workflow JSON. Identifiers,
 operators, aggregation shapes, array bounds, timestamps, and derived expressions are
-validated before compilation or storage. The v0.1.0 document does not embed source file
+validated before compilation or storage. The v0.1.1 document does not embed source file
 bytes.
 
 ## Compilation invariants
@@ -150,7 +150,7 @@ result remains intact.
 - Add persistence migrations by increasing the IndexedDB version and preserving parse
   validation.
 - Any remote adapter would require an explicit product/privacy decision, deterministic
-  tests, documentation, and an opt-in UI. v0.1.0 contains no such adapter.
+  tests, documentation, and an opt-in UI. v0.1.1 contains no such adapter.
 - Keep the visible SQL, exported SQL, and executed SQL on one compiler path.
 
 ## Verification map

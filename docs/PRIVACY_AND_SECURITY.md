@@ -1,6 +1,6 @@
 # Privacy and security
 
-Query Quilt v0.1.0 is a static, local-first browser application. “Local-first” describes a
+Query Quilt v0.1.1 is a static, local-first browser application. “Local-first” describes a
 specific data-flow boundary; it does not mean the hosting origin, browser, or dependency
 supply chain is automatically trusted.
 
@@ -36,7 +36,7 @@ as a failure. A deployed Pages build naturally uses the GitHub Pages origin rath
 localhost; the same application bundle still has no business-data request.
 
 After a successful production load and service-worker precache, the bundled samples can
-execute offline. An imported dataset is already local, but refresh clears it in v0.1.0.
+execute offline. An imported dataset is already local, but refresh clears it in v0.1.1.
 
 ## Explicit output channels
 

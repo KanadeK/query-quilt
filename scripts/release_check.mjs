@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import packageManifest from '../package.json' with { type: 'json' };
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const expectedVersion = '0.1.0';
+const expectedVersion = packageManifest.version;
 const requiredSubjects = [
   'chore: initialize repository and quality gates',
   'feat: implement domain core',
@@ -87,7 +87,9 @@ async function assertVersionConsistency() {
   const escapedVersion = expectedVersion.replaceAll('.', '\\.');
   const releaseHeading = new RegExp(`^## \\[v${escapedVersion}\\] - \\d{4}-\\d{2}-\\d{2}$`, 'm');
   if (!releaseHeading.test(changelog) || /^## Unreleased$/m.test(changelog)) {
-    throw new Error('CHANGELOG.md must have a dated v0.1.0 section and no Unreleased section.');
+    throw new Error(
+      `CHANGELOG.md must have a dated v${expectedVersion} section and no Unreleased section.`,
+    );
   }
 }
 

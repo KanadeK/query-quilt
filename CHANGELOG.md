@@ -2,6 +2,11 @@
 
 All notable changes to Query Quilt are documented here.
 
+## [v0.1.1] - 2026-07-28
+
+- Normalize ZIP timestamps and creator-platform headers so Windows and Linux produce byte-identical release archives.
+- Add an executable two-timezone archive metadata regression gate to every release package build.
+
 ## [v0.1.0] - 2026-07-28
 
 - Establish the React, TypeScript, Vite, Vitest, Playwright, and DuckDB-WASM foundation.
@@ -22,4 +27,3 @@ All notable changes to Query Quilt are documented here.
 - Override Workbox's legacy Jake file-list dependency with its Node 22-compatible patched major, removing the high-severity brace-expansion advisory chain.
 - Use the current official Node 24 GitHub Action majors for checkout, setup, artifacts, Pages configuration, and deployment.
 - Make offline browser acceptance wait for the committed 64-character result hash after an engine-ready reload, eliminating a race without sleeps.
-- Normalize ZIP timestamps and creator-platform headers so Windows and Linux produce byte-identical release archives.

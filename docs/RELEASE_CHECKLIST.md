@@ -8,8 +8,8 @@ gate is `npm run release-check` (or `make release-check` where Make is installed
 - [ ] The branch is `main`, the index and worktree are clean, and no untracked file is
       hidden from the decision.
 - [ ] `package.json`, `package-lock.json`, `src/version.ts`, and the documented current
-      version all say `0.1.0`.
-- [ ] `CHANGELOG.md` contains a dated `v0.1.0` section with no remaining Unreleased item.
+      version all say `0.1.1`.
+- [ ] `CHANGELOG.md` contains a dated `v0.1.1` section with no remaining Unreleased item.
 - [ ] Every author and committer matches the authenticated GitHub owner.
 - [ ] No commit message contains a `Co-authored-by` trailer.
 - [ ] The tracked tree contains no secret-like value or unfinished implementation marker.
@@ -31,7 +31,7 @@ npm run build
 
 - [ ] All commands exit zero without suppressed failures or `continue-on-error`.
 - [ ] All 58 unit/integration and 8 Chromium E2E tests pass.
-- [ ] Core line coverage is at least 80% (the v0.1.0 baseline is 97.68%).
+- [ ] Core line coverage is at least 80% (the v0.1.1 baseline is 97.68%).
 - [ ] The browser suite covers imports, four exports, edits/history, persistence, invalid
       inputs, chart lifecycle, 390 px layout, Axe, privacy probes, and offline samples.
 - [ ] `npm audit --audit-level=high` reports no high/critical production or development
@@ -40,7 +40,7 @@ npm run build
 ## 3. Documentation evidence
 
 - [ ] `npm run demo` produces a real DuckDB-WASM result and the documented hash.
-- [ ] `npm run screenshot` regenerates the real workbench image and shows v0.1.0.
+- [ ] `npm run screenshot` regenerates the real workbench image and shows v0.1.1.
 - [ ] `npm run benchmark` completes without browser errors or external requests.
 - [ ] README commands work from a fresh checkout with Node.js 22 or newer.
 - [ ] English and Chinese README facts, privacy boundaries, limits, and links agree.
@@ -51,8 +51,8 @@ npm run build
 npm run package
 ```
 
-- [ ] `dist-release/query-quilt-v0.1.0-static.zip` exists.
-- [ ] `dist-release/query-quilt-v0.1.0-workflows.zip` exists.
+- [ ] `dist-release/query-quilt-v0.1.1-static.zip` exists.
+- [ ] `dist-release/query-quilt-v0.1.1-workflows.zip` exists.
 - [ ] `dist-release/SHA256SUMS.txt` lists both archives.
 - [ ] The packager verifies each digest.
 - [ ] Each archive is extracted in a new temporary directory.
@@ -70,7 +70,7 @@ npm run package
       configured.
 - [ ] CI, Security, and Pages workflows for the release commit are green.
 - [ ] The Pages URL returns HTTP 200 and executes a sample in a browser.
-- [ ] Only after those checks pass, annotated tag `v0.1.0` is pushed.
+- [ ] Only after those checks pass, annotated tag `v0.1.1` is pushed.
 - [ ] The tag resolves to the verified main commit.
 - [ ] The release workflow reruns its quality gate and uploads both archives plus
       `SHA256SUMS.txt`.

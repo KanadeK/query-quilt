@@ -1,6 +1,6 @@
 {
   "name": "query-quilt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Turn local CSV and Parquet files into reversible SQL-backed analysis workflows in the browser.",
   "license": "MIT",

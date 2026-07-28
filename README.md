@@ -24,7 +24,7 @@ npm ci
 npm run dev
 ```
 
-Current release: **v0.1.0**. Requires Node.js 22 or newer for local development.
+Current release: **v0.1.1**. Requires Node.js 22 or newer for local development.
 
 ### A real input → output
 
@@ -51,7 +51,7 @@ rows, then writes `artifacts/demo/northern-revenue-by-category.json`.
 > account, telemetry, advertising, or remote database service. Hosting still serves the
 > application assets on first load; explicit downloads are the only application outputs.
 
-## What works in v0.1.0
+## What works in v0.1.1
 
 - Local `.csv` and `.parquet` import with filename normalization, empty-file checks,
   Parquet magic validation, and a 512 MiB per-file guard.
@@ -73,7 +73,7 @@ rows, then writes `artifacts/demo/northern-revenue-by-category.json`.
 
 ## Non-goals
 
-v0.1.0 is intentionally a focused browser workbench. It is not:
+v0.1.1 is intentionally a focused browser workbench. It is not:
 
 - a hosted warehouse, collaborative notebook, user account system, or cloud sync service;
 - a general SQL IDE with arbitrary statement execution or extension installation;
@@ -127,7 +127,7 @@ and Make tasks:
 | `npm run release-check` | Run the complete clean-tree release gate.                      |
 | `make verify/demo/...`  | Cross-platform entry points equivalent to the npm tasks.       |
 
-There is no public runtime API guarantee in v0.1.0. The TypeScript modules are organized
+There is no public runtime API guarantee in v0.1.1. The TypeScript modules are organized
 for testing and future extraction, but consumers should treat them as internal.
 
 ## Complete example
@@ -191,7 +191,7 @@ npm run build
 npm run package
 ```
 
-The v0.1.0 baseline contains **58 unit/integration tests** across 12 files and **8 Chromium
+The v0.1.1 baseline contains **58 unit/integration tests** across 12 files and **8 Chromium
 E2E tests**. Core coverage is **97.75% statements, 94.11% branches, 100% functions, and
 97.68% lines**. Browser paths cover real imports, all four exports, editing, undo/redo,
 IndexedDB reload, invalid inputs, chart lifecycle, offline execution, external-request
@@ -274,7 +274,7 @@ source file bytes. Clearing site data removes them.
 **How large a file can I import?**
 
 The application rejects files above 512 MiB, but the practical limit can be much lower on
-memory-constrained browsers because v0.1.0 is in-memory.
+memory-constrained browsers because v0.1.1 is in-memory.
 
 **Can a workflow execute arbitrary SQL?**
 
