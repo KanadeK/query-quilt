@@ -93,8 +93,27 @@ async function writeStaticArchive(outputPath) {
   for (const fileName of files) {
     await addFile(zip, path.join(distributionRoot, fileName), archivePath(fileName));
   }
-  await addFile(zip, path.join(repositoryRoot, 'LICENSE'), 'LICENSE');
-  await addFile(zip, path.join(repositoryRoot, 'README.md'), 'README.md');
+  for (const rootFile of [
+    'CHANGELOG.md',
+    'CODE_OF_CONDUCT.md',
+    'CONTRIBUTING.md',
+    'LICENSE',
+    'README.md',
+    'README.zh-CN.md',
+    'SECURITY.md',
+  ]) {
+    await addFile(zip, path.join(repositoryRoot, rootFile), rootFile);
+  }
+  for (const directoryName of ['docs', 'examples']) {
+    const sourceRoot = path.join(repositoryRoot, directoryName);
+    for (const fileName of await collectFiles(sourceRoot)) {
+      await addFile(
+        zip,
+        path.join(sourceRoot, fileName),
+        archivePath(path.join(directoryName, fileName)),
+      );
+    }
+  }
   zip.writeZip(outputPath);
 }
 
@@ -126,7 +145,16 @@ function inspectArchive(archivePathValue) {
 }
 
 async function smokeStaticArchive(extractedRoot) {
-  const requiredFiles = ['index.html', 'manifest.webmanifest', 'sw.js'];
+  const requiredFiles = [
+    'index.html',
+    'manifest.webmanifest',
+    'sw.js',
+    'LICENSE',
+    'README.md',
+    'README.zh-CN.md',
+    'docs/assets/query-quilt-workbench.png',
+    'examples/data/sales.csv',
+  ];
   for (const fileName of requiredFiles) {
     await stat(path.join(extractedRoot, fileName));
   }

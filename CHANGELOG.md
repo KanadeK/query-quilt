@@ -2,7 +2,7 @@
 
 All notable changes to Query Quilt are documented here.
 
-## Unreleased
+## [v0.1.0] - 2026-07-28
 
 - Establish the React, TypeScript, Vite, Vitest, Playwright, and DuckDB-WASM foundation.
 - Record the public-repository competitor scan and local-first privacy boundary.
