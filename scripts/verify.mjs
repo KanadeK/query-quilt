@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process';
 
 const npmCli = process.env.npm_execpath;
-const tasks = ['lint', 'format:check', 'typecheck', 'test:coverage', 'build'];
+const tasks = ['lint', 'format:check', 'typecheck', 'test:coverage', 'test:e2e', 'build'];
 
 if (!npmCli) {
   console.error('Run this verifier through `npm run verify` so the locked npm CLI is available.');

@@ -16,3 +16,7 @@ All notable changes to Query Quilt are documented here.
 - Add a deterministic production-server harness with isolated service-worker coverage for stable Windows and CI browser runs.
 - Complete the English and Simplified Chinese guides, architecture and privacy threat model, release checklist, and measured benchmark.
 - Add reproducible production-browser scripts for a real DuckDB demo result, README screenshot, and all-sample performance baseline.
+- Add Linux, Windows, and macOS quality gates plus minimal-permission security, Pages, and tag-release workflows.
+- Build deterministic static/workflow archives with SHA-256 sums, safe-entry validation, clean extraction, and a real packaged-browser smoke test.
+- Add repository secret/unfinished-marker scans and a one-command release gate that verifies versions, coverage, artifacts, authors, and a clean tree.
+- Override Workbox's legacy Jake file-list dependency with its Node 22-compatible patched major, removing the high-severity brace-expansion advisory chain.

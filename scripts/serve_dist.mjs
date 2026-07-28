@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const distributionRoot = path.join(repositoryRoot, 'dist');
+const defaultDistributionRoot = path.join(repositoryRoot, 'dist');
 
 const contentTypes = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -20,32 +20,45 @@ const contentTypes = new Map([
 ]);
 
 function validatePort(port) {
-  if (!Number.isSafeInteger(port) || port < 1 || port > 65_535) {
-    throw new Error('Static server port must be an integer between 1 and 65535.');
+  if (!Number.isSafeInteger(port) || port < 0 || port > 65_535) {
+    throw new Error('Static server port must be an integer between 0 and 65535.');
   }
 }
 
-function resolveRequestPath(requestUrl) {
+function resolveRequestPath(requestUrl, distributionRoot, fallbackPath) {
   const pathname = decodeURIComponent(new URL(requestUrl, 'http://127.0.0.1').pathname);
   const relative = pathname.replace(/^\/+/, '');
   const requested = path.resolve(distributionRoot, relative);
   if (requested !== distributionRoot && !requested.startsWith(`${distributionRoot}${path.sep}`)) {
     return null;
   }
-  if (existsSync(requested) && statSync(requested).isFile()) {
-    return requested;
+  if (existsSync(requested)) {
+    if (statSync(requested).isFile()) {
+      return requested;
+    }
+    const directoryIndex = path.join(requested, 'index.html');
+    if (existsSync(directoryIndex) && statSync(directoryIndex).isFile()) {
+      return directoryIndex;
+    }
   }
-  return path.join(distributionRoot, 'index.html');
+  return fallbackPath;
 }
 
-export async function startDistributionServer(port = 4180) {
+export async function startStaticServer(root, port = 4180, fallback = 'index.html') {
   validatePort(port);
-  if (!existsSync(path.join(distributionRoot, 'index.html'))) {
-    throw new Error('dist/index.html is missing. Run npm run build first.');
+  const distributionRoot = path.resolve(root);
+  const fallbackPath = path.resolve(distributionRoot, fallback);
+  if (
+    (fallbackPath !== distributionRoot &&
+      !fallbackPath.startsWith(`${distributionRoot}${path.sep}`)) ||
+    !existsSync(fallbackPath) ||
+    !statSync(fallbackPath).isFile()
+  ) {
+    throw new Error(`${distributionRoot} does not contain the fallback ${fallback}.`);
   }
 
   const server = createServer((request, response) => {
-    const filePath = resolveRequestPath(request.url ?? '/');
+    const filePath = resolveRequestPath(request.url ?? '/', distributionRoot, fallbackPath);
     if (!filePath) {
       response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
       response.end('Invalid path.');
@@ -68,6 +81,13 @@ export async function startDistributionServer(port = 4180) {
     });
   });
   return server;
+}
+
+export async function startDistributionServer(port = 4180) {
+  if (!existsSync(path.join(defaultDistributionRoot, 'index.html'))) {
+    throw new Error('dist/index.html is missing. Run npm run build first.');
+  }
+  return startStaticServer(defaultDistributionRoot, port);
 }
 
 export async function stopDistributionServer(server) {

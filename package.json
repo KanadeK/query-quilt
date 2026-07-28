@@ -4,9 +4,17 @@
   "private": true,
   "description": "Turn local CSV and Parquet files into reversible SQL-backed analysis workflows in the browser.",
   "license": "MIT",
+  "author": "KanadeK <121669563+KanadeK@users.noreply.github.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KanadeK/query-quilt.git"
+  },
   "type": "module",
   "engines": {
     "node": ">=22"
+  },
+  "overrides": {
+    "filelist": "2.0.2"
   },
   "scripts": {
     "dev": "vite",
@@ -24,7 +32,11 @@
     "verify": "node scripts/verify.mjs",
     "demo": "npm run build && node scripts/demo.mjs",
     "screenshot": "npm run build && node scripts/capture_screenshot.mjs",
-    "benchmark": "npm run build && node scripts/benchmark.mjs"
+    "benchmark": "npm run build && node scripts/benchmark.mjs",
+    "security:scan": "node scripts/scan_secrets.mjs && node scripts/scan_unfinished.mjs",
+    "package": "npm run build && node scripts/package_release.mjs",
+    "pages:smoke": "node scripts/smoke_pages.mjs",
+    "release-check": "node scripts/release_check.mjs"
   },
   "dependencies": {
     "@duckdb/duckdb-wasm": "1.32.0",
