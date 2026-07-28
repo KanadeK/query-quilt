@@ -30,6 +30,9 @@ export async function openWorkbench(page: Page) {
 }
 
 export async function resultHash(hash: Locator): Promise<string> {
+  await expect(hash).toHaveAttribute('data-result-hash', /^[a-f0-9]{64}$/, {
+    timeout: 45_000,
+  });
   const value = await hash.getAttribute('data-result-hash');
   expect(value).toMatch(/^[a-f0-9]{64}$/);
   return value ?? '';
