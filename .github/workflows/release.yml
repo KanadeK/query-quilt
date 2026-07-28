@@ -34,7 +34,7 @@ jobs:
       - name: Run release gate
         run: npm run release-check
       - name: Preserve release assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: query-quilt-${{ github.ref_name }}
           path: dist-release
